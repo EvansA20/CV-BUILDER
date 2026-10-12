@@ -1,4 +1,4 @@
-# Career— CV & Portfolio Builder
+# Careerfy — CV & Portfolio Builder
 
 A frontend-only React and TypeScript MVP for creating, editing, previewing, saving, and exporting CVs. CVs and profile photos are stored in IndexedDB in the current browser profile. No account or custom backend is used.
 
@@ -21,4 +21,5 @@ Run the data validation and PDF pagination tests with `npm test`.
 - Light and dark workspace themes, responsive mobile edit/preview tabs, and local data deletion
 
 Careerfy stores personal details locally by default. Clearing browser storage can remove saved CVs; export a JSON backup if you need an independent copy.
+
 # CV-BUILDER
