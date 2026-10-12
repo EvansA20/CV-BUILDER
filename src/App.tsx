@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeft, FileOutput, FileText, FolderOpen, LayoutTemplate, LockKeyhole, Menu, Settings2, ShieldCheck, X } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 import { Editor } from "./Editor";
 import { Dashboard, Landing, PreviewExportPage, SettingsPage, TemplatesPage } from "./Pages";
 import { downloadCVPdf } from "./exportPdf";
@@ -271,9 +272,9 @@ export default function App() {
 
   if (!ready) return <div className="loading-screen"><div className="loading-mark">c.</div><span>Opening your workspace…</span></div>;
 
-  if (page === "landing") return <div data-theme={theme}><Landing onStart={() => createDocument()} onTemplates={() => setPage("templates")} onDashboard={() => setPage("dashboard")} hasDocuments={documents.length > 0} />{toast && <div className="toast" role="status">{toast}</div>}</div>;
+  if (page === "landing") return <div data-theme={theme}><Landing onStart={() => createDocument()} onTemplates={() => setPage("templates")} onDashboard={() => setPage("dashboard")} hasDocuments={documents.length > 0} />{toast && <div className="toast" role="status">{toast}</div>}<Analytics /></div>;
 
-  if (page === "editor" && activeCV) return <div className="app-frame editor-frame" data-theme={theme}><Editor key={activeCV.id} cv={activeCV} saved={saveState === "saved"} saveError={saveError} onChange={updateActive} onBack={() => { void persist(activeCV); setPage("dashboard"); }} onDownload={() => downloadPDF(activeCV)} onPrint={printCV} />{toast && <div className="toast" role="status">{toast}</div>}</div>;
+  if (page === "editor" && activeCV) return <div className="app-frame editor-frame" data-theme={theme}><Editor key={activeCV.id} cv={activeCV} saved={saveState === "saved"} saveError={saveError} onChange={updateActive} onBack={() => { void persist(activeCV); setPage("dashboard"); }} onDownload={() => downloadPDF(activeCV)} onPrint={printCV} />{toast && <div className="toast" role="status">{toast}</div>}<Analytics /></div>;
 
   return <div className="app-frame" data-theme={theme}>
     <AppNavigation page={page} setPage={setPage} onCreate={() => createDocument()} mobileOpen={mobileNavOpen} setMobileOpen={setMobileNavOpen} />
@@ -285,5 +286,6 @@ export default function App() {
       {page === "preview" && (activeCV ? <PreviewExportPage cv={activeCV} onEdit={() => setPage("editor")} onDownload={() => downloadPDF(activeCV)} onPrint={printCV} /> : <div className="page-content preview-empty"><div className="empty-illustration"><FileOutput size={31} /></div><h1>No CV to preview yet.</h1><p>Create or open a CV to preview and export it.</p><button className="button button-primary" onClick={() => createDocument()}>Create a CV</button></div>)}
     </div>
     {toast && <div className="toast" role="status">{toast}</div>}
+    <Analytics />
   </div>;
 }
